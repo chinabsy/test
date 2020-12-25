@@ -1,0 +1,65 @@
+import easygui
+
+from tkinter.ttk import *
+from tkinter.filedialog import *
+from tkinter import *
+from PIL import ImageTk
+#请在下方书写你的代码 570 680 55 41 205 40 400 530
+w = Tk()
+w.title('黑客专用文件验证器')
+w.resizable(0,0)
+w.geometry('570x680')
+try:
+    photo = ImageTk.PhotoImage(file=r"C:\Users\shuping\Downloads\a.jpg",width=570,height=680)
+
+    e = Label(w,image=photo)
+    e.pack()
+except:
+    pass
+c = Combobox(w)
+c['values']=['text','binary system']
+c.place(x=55,y=41)
+c['state']='readonly'
+c.current(0)
+def a():
+
+
+    global url
+    url = askopenfile()
+    try:
+        o = str(url).split("name='")[1].split("' mode=")[0]
+    except:
+        o = str(url.decode('gbk')).split("name='")[1].split("' mode=")[0]
+
+    print(o)
+    global d
+    o = str(o)
+    if c.get() == 'text':
+        try:
+            with open(o,'r',encoding='utf-8') as d:
+                d = str(d.read())
+                e = Entry(w,width=75,text=d)
+
+                e.place(x=20,y=75,height=600)
+        except:
+            with open(o,'r',encoding='gbk') as d:
+                d = str(d.read())
+                e = Entry(w,width=75,text=d)
+
+                e.place(x=20,y=75,height=600)
+    else:
+        with open(o,'wr') as d:
+            d = str(d.read())
+            e = Entry(w,width=75,text=d)
+
+            e.place(x=20,y=75,height=600)
+
+b = Button(w,text='打开文件',command=a)
+b.place(x=204,y=41)# 400 530
+# e = Entry(w,width=400,height=530,bd=0)
+# e.place(x=0,y=0)
+
+
+
+
+w.mainloop()
